@@ -33,8 +33,5 @@ override.tf.json
 .terraformrc
 terraform.rc
 
-# Kubernetes files
-**/.kube/*
-
 # SSH files
 **/.ssh/*
