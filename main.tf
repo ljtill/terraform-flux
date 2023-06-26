@@ -4,7 +4,7 @@
 
 resource "azurerm_resource_group" "main_services" {
   name     = "Services"
-  location = var.location
+  location = local.services.location
 
   tags = {}
 }
@@ -12,11 +12,10 @@ resource "azurerm_resource_group" "main_services" {
 module "services" {
   source = "./modules/services"
 
-  resource_name       = var.services_resource_name
-  location            = azurerm_resource_group.main_services.location
   resource_group_name = azurerm_resource_group.main_services.name
+  services            = local.services
 
-  tags = {}
+  tags = merge(local.tags, {})
 }
 
 #
@@ -25,7 +24,7 @@ module "services" {
 
 resource "azurerm_resource_group" "main_cluster" {
   name     = "Cluster"
-  location = var.location
+  location = local.cluster.location
 
   tags = {}
 }
@@ -33,13 +32,12 @@ resource "azurerm_resource_group" "main_cluster" {
 module "cluster" {
   source = "./modules/cluster"
 
-  resource_name       = var.cluster_resource_name
-  location            = azurerm_resource_group.main_cluster.location
   resource_group_name = azurerm_resource_group.main_cluster.name
+  cluster             = local.cluster
 
   registry_id = module.services.registry_id
 
-  tags = {}
+  tags = merge(local.tags, {})
 }
 
 module "bootstrap" {

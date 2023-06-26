@@ -3,19 +3,19 @@
 #
 
 resource "azurerm_kubernetes_cluster" "main" {
-  name                = var.resource_name
-  location            = var.location
+  name                = var.cluster.resource_name
+  location            = var.cluster.location
   resource_group_name = var.resource_group_name
 
-  dns_prefix                = var.resource_name
+  dns_prefix                = var.cluster.resource_name
   sku_tier                  = "Standard"
-  automatic_channel_upgrade = "patch"
+  automatic_channel_upgrade = var.cluster.upgrade_channel
 
   default_node_pool {
     name                        = "nodepool1"
-    vm_size                     = "standard_d4s_v5"
+    vm_size                     = var.cluster.vm_size
     temporary_name_for_rotation = "nodepool"
-    node_count                  = 3
+    node_count                  = var.cluster.node_count
     zones                       = ["1", "2", "3"]
   }
 
