@@ -3,11 +3,11 @@
 #
 
 resource "azurerm_container_registry" "main" {
-  name                = var.resource_name
-  location            = var.location
+  name                = var.services.resource_name
+  location            = var.services.location
   resource_group_name = var.resource_group_name
 
-  sku           = "Premium"
+  sku           = var.services.sku
   admin_enabled = false
 
   tags = var.tags
