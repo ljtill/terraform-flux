@@ -4,7 +4,7 @@
 
 resource "azurerm_resource_group" "main_services" {
   name     = "Services"
-  location = ""
+  location = var.location
 
   tags = {}
 }
@@ -12,7 +12,7 @@ resource "azurerm_resource_group" "main_services" {
 module "services" {
   source = "./modules/services"
 
-  resource_name       = ""
+  resource_name       = var.services_resource_name
   location            = azurerm_resource_group.main_services.location
   resource_group_name = azurerm_resource_group.main_services.name
 
@@ -25,7 +25,7 @@ module "services" {
 
 resource "azurerm_resource_group" "main_cluster" {
   name     = "Cluster"
-  location = ""
+  location = var.location
 
   tags = {}
 }
@@ -33,7 +33,7 @@ resource "azurerm_resource_group" "main_cluster" {
 module "cluster" {
   source = "./modules/cluster"
 
-  resource_name       = ""
+  resource_name       = var.cluster_resource_name
   location            = azurerm_resource_group.main_cluster.location
   resource_group_name = azurerm_resource_group.main_cluster.name
 
