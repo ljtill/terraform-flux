@@ -3,7 +3,7 @@
 #
 
 resource "azurerm_resource_group" "main_services" {
-  name     = "Services"
+  name     = local.services.resource_group_name
   location = local.services.location
 
   tags = {}
@@ -23,7 +23,7 @@ module "services" {
 #
 
 resource "azurerm_resource_group" "main_cluster" {
-  name     = "Cluster"
+  name     = local.cluster.resource_group_name
   location = local.cluster.location
 
   tags = {}
